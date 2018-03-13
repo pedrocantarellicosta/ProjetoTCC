@@ -1,0 +1,11 @@
+editor.navigateUp() --> passa para linha de cima.
+editor.navigateDown() --> passa para linha de baixo.
+editor.getLastVisibleRow() --> Quantidade de linhas no editor.
+editor.getValue() --> retorna tudo escrito dentro do editor.
+editor.getCopyText() -->  retorna o texto selecionado pelo usuario.
+editor.moveLinesDown()--> passa a linha para baixo.
+editor.moveLinesUp() --> passa a linha para cima.
+editor.insert(string) --> inserir algo no editor
+code mirror
+
+ver como funciona EVAL()
