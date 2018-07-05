@@ -165,8 +165,8 @@
       padding: 0;
       position: relative;
       border-bottom:1px solid #e0e7f1 ;
-      width: 1%
-      height:100%;
+      width: 0%;
+      height:auto;
     }
     .titulo p{
       margin: 2px;
@@ -175,6 +175,16 @@
       color:black;
     }
 
+    .linhaerro{
+      position:absolute;
+      background:red;
+      z-index:20
+    }
 
+    .linha{
+      position:absolute;
+      background:green;
+      z-index:20
+    }
 
 

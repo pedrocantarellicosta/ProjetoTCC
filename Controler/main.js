@@ -6,15 +6,20 @@ document.write(unescape("%3Cscript src='Model/resultados.js' type='text/javascri
 var qtdlinha;
 var linha;
 var sequencia;
+var erros;
+var marcador;
 
 
 function play(){
   variaveis = [];
-  //resultados = [];
   sequencia = new Fluxo();
   resultados = new Resultado();
+  
+  //CRIA VARIAVEL QUE CONTEM O PRIMEIRO ERRO
+  erros = new Erro();
+  //LIMPA OS MARCADORES DE ERRO DO CODIGO
+  editor.session.removeMarker(marcador);
 
-  erros = false;
   qtdlinha = editor.getLastVisibleRow();
 
   var texto = editor.getValue();
@@ -23,37 +28,37 @@ function play(){
   console.log("array texto: "+textolinhas.length);
   console.log("quantidade linhas "+qtdlinha);
 
-  for(linha=0;linha<=qtdlinha;linha++){    
+  for(linha=0;linha<=qtdlinha && erros.linha.length == 0;linha++){    
     if(textolinhas[linha].trim()!=""){
       textolinhas[linha].toLowerCase();
 
-      linha = funcaoPara(textolinhas,variaveis, linha, sequencia);
-      linha = funcaoEnquanto(textolinhas,variaveis, linha, sequencia);
-      linha = funcaoSe(textolinhas,variaveis, linha, sequencia);
+      linha = funcaoPara(textolinhas,variaveis, linha, sequencia, erros);
+      linha = funcaoEnquanto(textolinhas,variaveis, linha, sequencia, erros);
+      linha = funcaoSe(textolinhas,variaveis, linha, sequencia, erros);
 
-      variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia);
-      OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia);
-
+      variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
+      OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
+      
     }
   }
   mostraVariaveiseResultadosFinal(variaveis, resultados, erros, sequencia);
 }
 
-function variaveisEResultados(textolinha,variaveis,linha, sequencia){
-  verificaVariavel(textolinha,variaveis,linha, sequencia);
-  mudaValorVariavel(textolinha,variaveis, linha, sequencia);
-  verificaImprime(textolinha, resultados, variaveis, linha, sequencia);
+function variaveisEResultados(textolinha,variaveis,linha, sequencia, erros){
+  verificaVariavel(textolinha,variaveis,linha, sequencia, erros);
+  mudaValorVariavel(textolinha,variaveis, linha, sequencia, erros);
+  verificaImprime(textolinha, resultados, variaveis, linha, sequencia, erros);
 }
 
-function funcaoPara(textolinhas, variaveis, linha, sequencia){
+function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
   var teste = verificaPara(textolinhas[linha].trim());
   //SE RETORNA TRUE TEM INICIO DE UMA FUNÇÃO PARA MAS NAO ESTA CORRETO A SINTAXE.
   if(teste !=false){
     if(teste === true){
-      console.log("ERRO DE SINTAXE DA FUNÇÃO PARA");
+      erros.setErro((linha+1), "ERRO DE SINTAXE DA FUNÇÃO PARA");return;
       while(!verificaFimPara(textolinhas[linha].trim())){
           if(linha>qtdlinha){
-           console.log("ERRO! NÃO EXISTE FINAL DA FUNÇÃO PARA");
+            erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO PARA");return;
            return;
           }
           linha++;
@@ -74,11 +79,11 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia){
           console.log("entro");
           while(!verificaFimPara(textolinhas[linha].trim())){
             if(linha>qtdlinha){
-             console.log("ERRO! NÃO EXISTE FINAL DA FUNÇÃO PARA");
+              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO PARA");return;
              return;
             }
-            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia);
-            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia);
+            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
+            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
 
             sequencia.setFluxo(linha);
             variaveis[varfor].setValor(x, sequencia.linhas.length);
@@ -99,16 +104,16 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia){
   return linha;
 }
 
-function funcaoEnquanto(textolinhas, variaveis, linha, sequencia){
+function funcaoEnquanto(textolinhas, variaveis, linha, sequencia, erros){
   var teste = verificaEnquanto(textolinhas[linha].trim());
   if(teste !=false){
     //TRUE PARA ERRO DE SINTAXE
     if(teste === true){
-      console.log("ERRO DE SINTAXE DA FUNÇÃO ENQUANTO");
+      erros.setErro((linha+1), "ERRO DE SINTAXE DA FUNÇÃO ENQUANTO");return;
       while(!verificaFimEnquanto(textolinhas[linha].trim())){
        // console.log("testteste");
         if(linha>qtdlinha){
-         console.log("ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");
+          erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");return;
          return;
         }
         linha++;
@@ -134,11 +139,11 @@ function funcaoEnquanto(textolinhas, variaveis, linha, sequencia){
           while(!verificaFimEnquanto(textolinhas[linha].trim())){
            // console.log("testteste");
             if(linha>qtdlinha){
-             console.log("ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");
+              erros.setErro((linha+1),"ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");return;
              return;
             }
-            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia);
-            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia);
+            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
+            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
             linha++;
             qtd++
           }
@@ -161,7 +166,7 @@ function funcaoEnquanto(textolinhas, variaveis, linha, sequencia){
 }
 
 //ESTA CORRETO MAS CASO NAO PASSE NA CONDIÇÂO AS LINHAS NAO SAO PULADAS!
-function funcaoSe(textolinhas, variaveis, linha, sequencia){
+function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
   var teste = verificaSe(textolinhas[linha].trim());
 
   if(teste !=false){
@@ -192,11 +197,11 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia){
         if(eval(varum+" "+teste[1]+" "+vardois)){
           while(!verificaFimSe(textolinhas[linha].trim())){
             if(linha>qtdlinha){
-             console.log("ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");return;
              return;
             }
-            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia);
-            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia);
+            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
+            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
             linha++;
           }
           sequencia.setFluxo(linha);
@@ -206,13 +211,13 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia){
           }
           sequencia.setFluxo(linha);
         }
-      } else console.log("erro na execução");
+      } else erros.setErro((linha+1), "erro na execução");return;
     }
   }
   return linha;
 }
 
-function OperacaoMatemarica(textolinha, variaveis, linha, sequencia){
+function OperacaoMatemarica(textolinha, variaveis, linha, sequencia, erros){
   var teste = verificaConta(textolinha);
   if(teste !=false){
     varum = verificaExistenciaVariavel(variaveis, teste[0]);
@@ -259,7 +264,7 @@ function OperacaoMatemarica(textolinha, variaveis, linha, sequencia){
           variaveis[varum].setValor(eval(variaveis[vardois].valores[(variaveis[vardois].valores.length-1)]+" "+teste[2]+" "+variaveis[vartres].valores[(variaveis[vartres].valores.length-1)]), sequencia.linhas.length);
         }
       }
-    }else console.log("VARIAVEL UTILIZADA NA OPERAÇÃO NAO EXISTE")
+    }else erros.setErro((linha+1), "VARIAVEL UTILIZADA NA OPERAÇÃO NAO EXISTE");
   }
 }
 

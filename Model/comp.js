@@ -29,7 +29,15 @@ function Fluxo(){
   }
 }
 
+function Erro(){
+  this.linha = [];
+  this.msg = [];
 
+  this.setErro = function(linha, msg){
+    this.linha.push(linha);
+    this.msg.push(msg);
+  }
+}
 
 function verificaExistenciaVariavel(variaveis, nomevariavel){
   for(var x = 0;x < variaveis.length; x++){
@@ -39,11 +47,13 @@ function verificaExistenciaVariavel(variaveis, nomevariavel){
   }
   return false;
 }
+
 function ehNumero(str) {
   var er = /^[0-9]+$/;
   return (er.test(str));
 }
-function verificaVariavel(textolinha, variaveis, linha, sequencia){
+
+function verificaVariavel(textolinha, variaveis, linha, sequencia, erros){
   regexInteiro = /^inteiro ([a-z]+)(?:=| = | =|= )([0-9]+)$/;
   regexPalavra = /^palavra ([a-z]+)(?:=| = | =|= )([a-zA-Z]+)$/;
   regexCaracter = /^caracter ([a-z]+)(?:=| = | =|= )([a-zA-Z])$/;  
@@ -71,17 +81,17 @@ function verificaVariavel(textolinha, variaveis, linha, sequencia){
       
   }
   if(ehvariavel){
-    if(verificaExistenciaVariavel(variaveis, nomevariavel) == false){
+    if(verificaExistenciaVariavel(variaveis, nomevariavel) !== false){
+      erros.setErro((linha+1), "ERRO DUPLICIDADE VARIAVEL");
+      return;
+    }else{
       sequencia.setFluxo(linha);
       variaveis.push(new Variavel(nomevariavel,tipo, valorvariavel,sequencia.linhas.length)); 
-    }else{
-      console.log((linha+1)+"ERRO DUPLICIDADE VARIAVEL");
-      return;
     }
   } 
 }
 
-function mudaValorVariavel(textolinha, variaveis, linha, sequencia){
+function mudaValorVariavel(textolinha, variaveis, linha, sequencia, erros){
   regexMudaValorVariavel = /^([a-z]+)(?:=| = | =|= )([a-zA-Z]+|[0-9]+)$/; // \w+ tb funciona
   regexStrIntChar = /^([a-zA-Z]+)|([0-9]+)$/; 
   regexStr = /^([a-zA-Z]+)$/;
@@ -100,7 +110,7 @@ function mudaValorVariavel(textolinha, variaveis, linha, sequencia){
           sequencia.setFluxo(linha)
           variaveis[posicaovariavel].setValor(valorvariavel, sequencia.linhas.length);
         }else{
-          console.log(linha+":VALOR NAO CORRESPONDE AO TIPO")
+          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO")
         }
       }
       if(variaveis[posicaovariavel].tipo == "int"){
@@ -108,7 +118,7 @@ function mudaValorVariavel(textolinha, variaveis, linha, sequencia){
           sequencia.setFluxo(linha)
           variaveis[posicaovariavel].setValor(valorvariavel, sequencia.linhas.length);;
         }else{
-          console.log(linha+1+":VALOR NAO CORRESPONDE AO TIPO")
+          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO")
         }
       }
       if(variaveis[posicaovariavel].tipo == "char"){
@@ -116,11 +126,11 @@ function mudaValorVariavel(textolinha, variaveis, linha, sequencia){
           sequencia.setFluxo(linha)
           variaveis[posicaovariavel].setValor(valorvariavel, sequencia.linhas.length);
         }else{
-          console.log(linha+1+":VALOR NAO CORRESPONDE AO TIPO")
+          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO")
         }
       }
     }else{
-      console.log(linha+1+":VARIAVEL NÃO EXISTE");
+      erros.setErro((linha+1), "VARIAVEL NÃO EXISTE");
     }
   }
 }
@@ -203,7 +213,7 @@ function verificaFimSe(textolinha){
   else return false;
 }
 
-function verificaImprime(textolinha, resultados, variaveis, linha, sequencia){
+function verificaImprime(textolinha, resultados, variaveis, linha, sequencia, erros){
   regexImprimeTexto=/^(?:imprime)(?:\(\")([a-zA-Z0-9-_\.\-\+\*\\\=\!\@\#\$\%\&\*\(\)\s]*)(?:\"\))$/;
   regexImprimeVariavel=/^(?:imprime)(?:\()([a-z]+)(?:\))$/;
   regexImprimeTextoeVariavel=/^(?:imprime)(?:\(\")([a-zA-Z0-9-_\.\-\+\*\\\=\!\@\#\$\%\&\*\(\)\s]*)(?:\"\,[\s]*)([a-z]+)(?:\))$/;
@@ -220,7 +230,7 @@ function verificaImprime(textolinha, resultados, variaveis, linha, sequencia){
       texto = ""+variaveis[pos].valores[variaveis[pos].valores.length-1];
       sequencia.setFluxo(linha);  
       resultados.setResultado(texto, sequencia.linhas.length);
-    }else console.log("VARIAVEL NÃO EXISTE");
+    }else erros.setErro((linha+1), "VARIAVEL NÃO EXISTE");
   }
   if(regexImprimeTextoeVariavel.test(textolinha)){
     texto = textolinha.replace(regexImprimeTextoeVariavel, "$1");
@@ -231,7 +241,7 @@ function verificaImprime(textolinha, resultados, variaveis, linha, sequencia){
       texto += ""+variaveis[pos].valores[variaveis[pos].valores.length-1];
       sequencia.setFluxo(linha); 
       resultados.setResultado(texto, sequencia.linhas.length); 
-    }else console.log("VARIAVEL NÃO EXISTE 2");
+    }else erros.setErro((linha+1), "VARIAVEL NÃO EXISTE");
     
   }
 }

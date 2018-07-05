@@ -22,9 +22,9 @@ function alteraValoresRange(range, sequencia){
 function mostraVariaveiseResultadosFinal(variaveis, resultados, erros, sequencia){
 	range = document.getElementById("range");
 	bloqueiaRange(range);
-	//DESLIZA = IMPUT RANGE
+	//DESLIZA = INPUT RANGE
 	//RANGE = DIV QUE CONTEM O INPUT E O TEXTO COM O FLUXO
-	if(erros === false){
+	if(erros.linha.length == 0){
 
 		mostraVariaveis(variaveis, sequencia.linhas.length);
 		mostraResultado(resultados, sequencia.linhas.length);
@@ -35,13 +35,22 @@ function mostraVariaveiseResultadosFinal(variaveis, resultados, erros, sequencia
 		alteraValoresRange(desliza, sequencia);
 		liberaRange(range);
 		desliza.value = sequencia.linhas.length;
-		document.getElementById("valordesliza").innerHTML = sequencia.linhas[sequencia.linhas.length-1]+1;
+		editor.gotoLine(sequencia.linhas.length);
+		//document.getElementById("valordesliza").innerHTML = sequencia.linhas[sequencia.linhas.length-1]+1;
+	}else{
+		//MOSTRA ERRO
+		bloqueiaRange(range);
+		mostraErro(erros);
+		// console.log("Linha " + erros.linha[0] + ": " + erros.msg[0]);
 	}
 }
 
 function mostraVariaveiseResultadosSelecionado(variaveis,resultados, fluxo){
 	mostraVariaveis(variaveis, fluxo);
 	mostraResultado(resultados, fluxo);
+
+	editor.gotoLine(sequencia.linhas[fluxo-1]+1);
+
 }
 
 
@@ -66,4 +75,12 @@ function mostraResultado(resultados, fluxo){
 	for(var x = 0;resultados.fluxo[x] <= fluxo;x++){
 		campoResultados.innerHTML += "<p>"+resultados.textos[x]+"</p>"; 
 	}
+}
+
+function mostraErro(erro){
+	campoResultados = document.getElementById("camporesultado");
+	limpaResultado(campoResultados);
+	marcador = editor.session.addMarker(new Range((erro.linha[0]-1), 0, (erro.linha[0]-1), 1), "linhaerro", "fullLine");
+	campoResultados.innerHTML += "<p>ERRO!! <br>LINHA "+ erro.linha[0] +": " + erro.msg[0] +"</p>"; 
+	
 }
