@@ -5,4 +5,4 @@ A ferramenta proposta tem como objetivo principal ser uma ferramenta que auxilie
 
 
 Aplicativo disponivel em: 
-http://pedrocantarellicosta.eu/projetos/noxus/
+http://pedrocantarellicosta.eu/projetos/sistemanoxus/
