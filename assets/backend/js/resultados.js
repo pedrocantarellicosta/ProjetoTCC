@@ -35,9 +35,10 @@ function mostraVariaveiseResultadosFinal(variaveis, resultados, erros, sequencia
 		alteraValoresRange(desliza, sequencia);
 		liberaRange(range);
 		desliza.value = sequencia.linhas.length;
-		editor.gotoLine(sequencia.linhas.length);
+		editor.gotoLine(sequencia.linhas[sequencia.linhas.length-1] +1);
 		//document.getElementById("valordesliza").innerHTML = sequencia.linhas[sequencia.linhas.length-1]+1;
 	}else{
+		document.getElementById("campovariaveis").innerHTML= "";
 		//MOSTRA ERRO
 		bloqueiaRange(range);
 		mostraErro(erros);

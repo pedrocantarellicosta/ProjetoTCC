@@ -104,7 +104,14 @@
     </div>
     <div class='row'>
         <div class='col-md-8 ' style='height:650px'>
-        <div id="editor"></div>
+        <div id="editor">inteiro x = 0
+inteiro y = 0
+
+para x de 0 ate 2 faca
+    para y de 0 ate 2 faca
+        imprime(x)
+    fimpara
+fimpara</div>
             <div id="range" style="display:none" >
                 <input type="range" id="desliza"  onchange="changeRange(this.value)" min="0" max="20" >
             </div>
@@ -233,7 +240,7 @@ function exemploCalculadora(){
 }
 
 function exemploComissao(){
-    texto = "palavra nome = Fulano\r\ninteiro salario = 1500\r\ninteiro valortotalvendas = 0\r\ninteiro comissao = 0\r\ninteiro salariofinal = 0\r\n\r\nvalortotalvendas = 10000\r\n\r\ncomissao = valortotalvendas * 15\r\ncomissao = comissao / 100\r\n\r\nsalariofinal = salario + comissão\r\n\r\nimprime(\"Resultado\")\r\nimprime(\"Vendedor eh \", nome)\r\nimprime(\"Salario eh R$\", salario)\r\nimprime(\"Valor Total de Vendas R$\", valortotalvendas)\r\nimprime(\"Comissao de R$\", comissao)\r\nimprime(\"Total a receber R$\", salariofinal)";
+    texto = "palavra nome = Fulano\r\ninteiro salario = 1500\r\ninteiro valortotalvendas = 0\r\ninteiro comissao = 0\r\ninteiro salariofinal = 0\r\n\r\nvalortotalvendas = 10000\r\n\r\ncomissao = valortotalvendas * 15\r\ncomissao = comissao / 100\r\n\r\nsalariofinal = salario + comissao\r\n\r\nimprime(\"Resultado\")\r\nimprime(\"Vendedor eh \", nome)\r\nimprime(\"Salario eh R$\", salario)\r\nimprime(\"Valor Total de Vendas R$\", valortotalvendas)\r\nimprime(\"Comissao de R$\", comissao)\r\nimprime(\"Total a receber R$\", salariofinal)";
 
     editor.setValue("");
     editor.insert(texto, 0);

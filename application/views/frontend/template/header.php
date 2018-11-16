@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- <a class="navbar-brand" href="#">Noxus</a> -->
-                <img src="<?php echo base_url('assets/imagens/logoN.png')?>" style="width:50px;margin-top:2px;"/>
+                <a href="<?php echo base_url('home')?>"><img src="<?php echo base_url('assets/imagens/logoN.png')?>" style="width:50px;margin-top:2px;"/></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:right;">

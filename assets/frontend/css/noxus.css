@@ -370,3 +370,15 @@ footer {
   #dropdown open{
     background-color:black;
   }
+  
+  .linhaerro{
+    position:absolute;
+    background:red;
+    z-index:20
+  }
+
+  .linha{
+    position:absolute;
+    background:green;
+    z-index:20
+  }

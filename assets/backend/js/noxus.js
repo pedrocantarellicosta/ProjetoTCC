@@ -182,6 +182,7 @@ function verificaFimEnquanto(textolinha){
 
 function verificaConta(textolinha){
   regexConta = /^([A-Za-z]+)(?:|[ ]+)(?:=)(?:|[ ]+)([0-9]+|[A-Za-z]+)(?:|[ ]+)([+]|[-]|[*]|[/])(?:|[ ]+)([0-9]+|[A-Za-z]+)$/
+
   if(regexConta.test(textolinha)){  
     varum = textolinha.replace(regexConta,"$1");
     vardois = textolinha.replace(regexConta,"$2");
