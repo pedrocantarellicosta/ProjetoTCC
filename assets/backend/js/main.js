@@ -105,13 +105,12 @@ function variaveisEResultados(textolinha,variaveis,linha, sequencia, erros){
 
 function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
   var teste = verificaPara(textolinhas[linha].trim());
-  //SE RETORNA TRUE TEM INICIO DE UMA FUNÇÃO PARA MAS NAO ESTA CORRETO A SINTAXE.
+
   if(teste !=false){
     if(teste === true){
       erros.setErro((linha+1), "ERRO DE SINTAXE DA FUNÇÃO PARA");return;
     }else{
        var varfor = verificaExistenciaVariavel(variaveis, teste[0]);
-      alert(linha+ " : "+ teste[0]);
       if(varfor !== false){
         var  qtd=0;
 
@@ -122,9 +121,9 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
         linha+=1;
 
         for(;x <= parseInt(teste[2]);x++){
-          //console.log("X sendo: "+x);
-          //console.log(textolinhas[linha]);
-           var linhaant = linha;
+
+          var linhaant = linha;
+
           while(!verificaFimPara(textolinhas[linha].trim())){
             if(linha>qtdlinha){
               erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO PARA");
@@ -138,17 +137,12 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
             linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
             sequencia.setFluxo(linha);
             variaveis[varfor].setValor(x, sequencia.linhas.length);
-            //linha++;
             qtd = (linha - linhaant);
-            // console.log("Quantidade: "+qtd+ " Linha: "+linha+" linhaant: "+linhaant);
           }
           sequencia.setFluxo(linha);
-          //DEVE SER DIMINUIDO A QUANTIDADE DE LINHAS QUE O FOR PERCORREU DA VARIAVEL LINHA
           
-          //VERIFICAR RETORNO DA VARIAVEL LINHA - ESTA RETORNANDO ERRADO.
-          console.log(teste[0]+" : "+varfor+" : "+x);
           if(x != parseInt(teste[2])){
-            console.log("Diminui!!  linha: "+linha+" qtd: "+qtd);
+
             linha -= qtd;
             qtd=0;
             sequencia.setFluxo(linha-1);
@@ -157,7 +151,6 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
       }
     }
   }
-  //alert("Retorno linha : "+linha);
   return linha;
 }
 
