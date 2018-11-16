@@ -194,7 +194,7 @@ function verificaConta(textolinha){
 }
 
 function verificaSe(textolinha){
-  regexSe = /^(?:se)(?:|[ ]+)[(](?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)(<|>|<>|<=|==|>=|!=)(?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)[)](?:|[ ]+)(?:entao)$/;
+  regexSe = /^(?:se)(?:|[ ]+)[(](?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)(<|>|<>|<=|=|>=|!=)(?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)[)](?:|[ ]+)(?:entao)$/;
   regexInicioSe = /^(?:se)/;
   if(regexInicioSe.test(textolinha) && regexSe.test(textolinha)){  
     varum = textolinha.replace(regexSe,"$1");

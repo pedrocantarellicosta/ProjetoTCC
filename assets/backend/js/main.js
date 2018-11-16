@@ -230,10 +230,11 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
         vardois = verificaExistenciaVariavel(variaveis, teste[2]);
         ehVariaveis[1] = true;
       } 
+
       if(varum !== false && vardois !== false){
         if(ehVariaveis[0]==true) varum = variaveis[varum].valores[variaveis[varum].valores.length-1];
         if(ehVariaveis[1]==true) vardois = variaveis[vardois].valores[variaveis[vardois].valores.length-1];
-
+        if(teste[1] == "=") teste[1] = "==";
         if(eval(varum+" "+teste[1]+" "+vardois)){
           while(!verificaFimSe(textolinhas[linha].trim())){
             if(linha>qtdlinha){
@@ -248,15 +249,29 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
  
         }else{
           while(!verificaFimSe(textolinhas[linha].trim())){
+            linha = seIfDentrodeIf(textolinhas, linha);
+            alert(textolinhas[linha].trim());
             linha++;
           }
           sequencia.setFluxo(linha);
-          linha++;
+          ++linha;
+          alert("esse"+linha);
 
         }
       } else{
         erros.setErro((linha+1), "erro na execução");return;
       } 
+    }
+  }
+  alert(linha);
+  return linha;
+}
+
+function seIfDentrodeIf(textolinhas, linha){
+  var teste = verificaSe(textolinhas[linha].trim());
+  if(teste != false){
+    while(!verificaFimSe(textolinhas[linha].trim())){
+      linha++
     }
   }
   return linha;
