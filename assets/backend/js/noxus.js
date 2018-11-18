@@ -98,10 +98,8 @@ function mudaValorVariavel(textolinha, variaveis, linha, sequencia, erros){
   regexInt = /^([0-9]+)$/;
   regexChar = /^([a-zA-Z])$/;
   
-  //console.log("esse: "+textolinha+" regex "+regexMudaValorVariavel.test(textolinha));
   if(regexMudaValorVariavel.test(textolinha)){  
     nomevariavel = textolinha.replace(regexMudaValorVariavel, "$1"); 
-    //console.log("nome: "+nomevariavel);
     valorvariavel = textolinha.replace(regexMudaValorVariavel, "$2"); 
     posicaovariavel = verificaExistenciaVariavel(variaveis, nomevariavel);
     if(posicaovariavel  !== false){
@@ -215,14 +213,15 @@ function verificaFimSe(textolinha){
 }
 
 function verificaImprime(textolinha, resultados, variaveis, linha, sequencia, erros){
-  regexImprimeTexto=/^(?:imprime)(?:\(\")([a-zA-Z0-9-_\.\-\+\*\\\=\!\@\#\$\%\&\*\(\)\s]*)(?:\"\))$/;
-  regexImprimeVariavel=/^(?:imprime)(?:\()([a-z]+)(?:\))$/;
-  regexImprimeTextoeVariavel=/^(?:imprime)(?:\(\")([a-zA-Z0-9-_ \+\*\:\\\=\!\@\#\$\%\&\*\(\)\s]*)(?:\"\,[\s]*)([a-z]+)(?:\))$/;
+  regexImprimeTexto=/^(?:imprime)(?:[ ]*\([ ]*\")([a-zA-Zà-ù0-9-_\.\-\+\*\\\=\!\@\#\$\%\&\*\(\)\s]*)(?:\"[ ]*\))$/;
+  regexImprimeVariavel=/^(?:imprime)(?:[ ]*\([ ]*)([a-z]+)(?:[ ]*\))$/;
+  regexImprimeTextoeVariavel=/^(?:imprime)(?:[ ]*\([ ]*\")([a-zA-Zà-ù0-9-_ \+\*\:\\\=\!\@\#\$\%\&\*\(\)\s]*)(?:\"\,[\s]*)([a-z]+)(?:[ ]*\))$/;
   
   if(regexImprimeTexto.test(textolinha)){
     texto = textolinha.replace(regexImprimeTexto, "$1");
     sequencia.setFluxo(linha);  
     resultados.setResultado(texto, sequencia.linhas.length);
+    return true;
   }
   if(regexImprimeVariavel.test(textolinha)){
     variavel = textolinha.replace(regexImprimeVariavel, "$1");
@@ -231,6 +230,7 @@ function verificaImprime(textolinha, resultados, variaveis, linha, sequencia, er
       texto = ""+variaveis[pos].valores[variaveis[pos].valores.length-1];
       sequencia.setFluxo(linha);  
       resultados.setResultado(texto, sequencia.linhas.length);
+      return true;
     }else erros.setErro((linha+1), "VARIAVEL NÃO EXISTE");
   }
   if(regexImprimeTextoeVariavel.test(textolinha)){
@@ -242,7 +242,9 @@ function verificaImprime(textolinha, resultados, variaveis, linha, sequencia, er
       texto += ""+variaveis[pos].valores[variaveis[pos].valores.length-1];
       sequencia.setFluxo(linha); 
       resultados.setResultado(texto, sequencia.linhas.length); 
+      return true;
     }else erros.setErro((linha+1), "VARIAVEL NÃO EXISTE");
     
   }
+  return false;
 }

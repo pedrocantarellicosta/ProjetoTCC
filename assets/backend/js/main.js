@@ -1,8 +1,3 @@
-//document.write(unescape("%3Cscript src='assets/backend/js/noxus.js' type='text/javascript'%3E%3C/script%3E"));
-//document.write(unescape("%3Cscript src='assets/backend/js/resultados.js' type='text/javascript'%3E%3C/script%3E"));
-
-
-
 var qtdlinha;
 var linha;
 var sequencia;
@@ -30,17 +25,14 @@ function play(){
 
 
   while(linha<=qtdlinha && erros.linha.length == 0){    
-    //console.log("entro");
     linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
 
   }
-  console.log("Linha FINAL: "+linha);
   mostraVariaveiseResultadosFinal(variaveis, resultados, erros, sequencia);
 }
 
 
 function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
-//console.log("Entro na logica com a linha "+linha);
   if(textolinhas[linha].trim()!=""){
     linhaantiga = linha;
     textolinhas[linha].toLowerCase();
@@ -59,12 +51,11 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
         regexInteiro = /^inteiro/;
         regexPalavra = /^palavra/;
         regexCaracter = /^caracter/;
-        regexImprime = /^imprime\(/  
+        regexImprime = /^imprime[ ]*\(/;
 
         nomeVariavel = textolinhas[linha].trim().split("=")[0].trim();
         ehVariavel = false;
         for(x = 0; x < variaveis.length && ehVariavel == false;x++){
-          //console.log("numero: "+x);
           if(variaveis[x].nome == nomeVariavel){
             ehVariavel = true;
           }
@@ -92,14 +83,18 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
       }
     }
   }else linha++;
-  //console.log("Saiu na logica com a linha "+linha);
   return linha;
 }
 
 function variaveisEResultados(textolinha,variaveis,linha, sequencia, erros){
   verificaVariavel(textolinha,variaveis,linha, sequencia, erros);
   mudaValorVariavel(textolinha,variaveis, linha, sequencia, erros);
-  verificaImprime(textolinha, resultados, variaveis, linha, sequencia, erros);
+  regexImprime = /^imprime[ ]*\(/  
+  if(regexImprime.test(textolinha)){
+    var verificaimprime = false;
+    verificaimprime = verificaImprime(textolinha, resultados, variaveis, linha, sequencia, erros);
+    if(verificaimprime == false) erros.setErro((linha+1), "FUNÇÃO IMPRIME ESTA INCORRETA!");
+  }
 }
 
 function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
@@ -128,10 +123,7 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
               erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO PARA");
               return;
             }
-           
-            //variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
-            //OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
-            
+                       
             if(linha<=qtdlinha && erros.linha.length == 0){
               linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
               if(erros.linha.length != 0) return;
@@ -159,7 +151,6 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
 function funcaoEnquanto(textolinhas, variaveis, linha, sequencia, erros){
   var teste = verificaEnquanto(textolinhas[linha].trim());
   if(teste !=false){
-    //TRUE PARA ERRO DE SINTAXE
     if(teste === true){
       erros.setErro((linha+1), "ERRO DE SINTAXE DA FUNÇÃO ENQUANTO");return;
     }else{
@@ -177,37 +168,77 @@ function funcaoEnquanto(textolinhas, variaveis, linha, sequencia, erros){
       if(varum !== false && vardois !== false){      
         
         if(ehNumero(teste[2] === false))valor = variaveis[vardois].valores[variaveis[vardois].valores.length-1];
-        
+        var entrou = false;
+        var valorvarant = variaveis[varum].valores[variaveis[varum].valores.length-1];
         while(eval(variaveis[varum].valores[variaveis[varum].valores.length-1]+" "+teste[1]+" "+valor)){
-         // console.log("linha: "+linha);
+         var linhaant = linha;
+         entrou = true;
+
           while(!verificaFimEnquanto(textolinhas[linha].trim())){
-           // console.log("testteste");
             if(linha>qtdlinha){
-              erros.setErro((linha+1),"ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");return;
-             return;
+              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");
+              return;
             }
-            variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
-            OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
-            linha++;
-            qtd++
-          }
-         // console.log(variaveis[varum].valor+" "+teste[1]+" "+ valor);
-          if(eval(variaveis[varum].valores[variaveis[varum].valores.length-1]+" "+teste[1]+" "+ valor)){
+                       
+            if(linha<=qtdlinha && erros.linha.length == 0){
+              linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+              if(erros.linha.length != 0) return;
+            }else return;            
+
             sequencia.setFluxo(linha);
-            //console.log("entrouaqui"+linha);
+            qtd = (linha - linhaant);
+          }
+          if(variaveis[varum].valores[variaveis[varum].valores.length-1] == valorvarant){
+            erros.setErro((linha+1), "VARIAVEL DA FUNÇÃO ENQUANTO NÃO ESTA SENDO MODIFICADA!");
+              return;
+          }else{
+            valorvalant = variaveis[varum].valores[variaveis[varum].valores.length-1];
+          }
+          if(eval(variaveis[varum].valores[variaveis[varum].valores.length-1]+" "+teste[1]+" "+ valor)){
             linha -= qtd;
             qtd=0;
             sequencia.setFluxo(linha-1);
-          }
+          }else{linha++;}
+
         }
+        if(entrou == false){
+          //VERIFICA FINAL DA FUNCAO PARA PULAR AS LINHAS.
+          while(!verificaFimEnquanto(textolinhas[linha].trim())){
+            linha = seEnquantoDentrodeEnquanto(textolinhas, linha);
+            
+            if(linha>=qtdlinha || linha == undefined){
+              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO ENQUANTO");
+              return;
+            }
+            linha++;
+          }
+          sequencia.setFluxo(linha);
+          linha++;
+        }
+      }else{
+        erros.setErro((linha+1), "ERRO DE SINTAXE DA FUNÇÃO ENQUANTO");return;
       }
-      //while para caso nao passe na condição e tenha que pular as linhas
-      while(!verificaFimEnquanto(textolinhas[linha].trim()))linha++;
-      sequencia.setFluxo(linha);
     }
   }
   return linha;
 }
+
+function seEnquantoDentrodeEnquanto(textolinhas, linha){
+  var teste = verificaEnquanto(textolinhas[linha].trim());
+  if(teste != false){
+    linha++;
+    while(!verificaFimEnquanto(textolinhas[linha].trim())){
+      linha = seEnquantoDentrodeEnquanto(textolinhas, linha);
+      linha++;
+      if(linha>=qtdlinha){
+        erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+       return;
+      }
+    }
+  }
+  return linha;
+}
+
 
 function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
   var teste = verificaSe(textolinhas[linha].trim());
@@ -249,7 +280,6 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
 
 
             }else return;
-            console.log(linha);
           }
           sequencia.setFluxo(linha);
           linha++;
@@ -257,9 +287,8 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
         }else{
           //VERIFICA FINAL DA FUNCAO PARA PULAR AS LINHAS.
           while(!verificaFimSe(textolinhas[linha].trim())){
-            linha = seIfDentrodeIf(textolinhas, linha);
+            linha = seSeDentrodeSe(textolinhas, linha);
             
-            console.log(linha);
             if(linha>=qtdlinha || linha == undefined){
               erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
              return;
@@ -268,23 +297,21 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
           }
           sequencia.setFluxo(linha);
           linha++;
-          console.log("linha: "+linha+" qtdlinha: "+qtdlinha);
         }
       } else{
         erros.setErro((linha+1), "erro na execução");return;
       } 
     }
   }
-  //console.log("linha 2 fim: "+linha);
   return linha;
 }
 
-function seIfDentrodeIf(textolinhas, linha){
+function seSeDentrodeSe(textolinhas, linha){
   var teste = verificaSe(textolinhas[linha].trim());
   if(teste != false){
     linha++;
     while(!verificaFimSe(textolinhas[linha].trim())){
-      linha = seIfDentrodeIf(textolinhas, linha);
+      linha = seSeDentrodeSe(textolinhas, linha);
       linha++;
       if(linha>=qtdlinha){
         erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
@@ -292,7 +319,6 @@ function seIfDentrodeIf(textolinhas, linha){
       }
     }
   }
-  console.log("final do pula se linha "+linha);
   return linha;
 }
 
@@ -314,8 +340,6 @@ function OperacaoMatemarica(textolinha, variaveis, linha, sequencia, erros){
         return;
       }
       if(ehNumero(teste[1]) === true && ehNumero(teste[3]) === true){
-        console.log(vardois+" "+teste[2]+" "+vartres);
-        console.log(eval(vardois+" "+teste[2]+" "+vartres));
         sequencia.setFluxo(linha);
         variaveis[varum].setValor(eval(vardois+" "+teste[2]+" "+vartres), sequencia.linhas.length);
       }   
@@ -359,10 +383,6 @@ function OperacaoMatemarica(textolinha, variaveis, linha, sequencia, erros){
   else {
     slider.style.left = "0px";
   }
-}
-
-function changeRange(valor){
-  console.log(valor);
 }
 
 function adicionaVariavel(tipo){
