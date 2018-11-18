@@ -34,12 +34,13 @@ function play(){
     linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
 
   }
+  console.log("Linha FINAL: "+linha);
   mostraVariaveiseResultadosFinal(variaveis, resultados, erros, sequencia);
 }
 
 
 function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
-
+//console.log("Entro na logica com a linha "+linha);
   if(textolinhas[linha].trim()!=""){
     linhaantiga = linha;
     textolinhas[linha].toLowerCase();
@@ -75,8 +76,6 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
            regexImprime.test(textolinhas[linha].trim()) == true||
            ehVariavel ){
             
-          console.log(textolinhas[linha]);  
-
           variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
           OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
 
@@ -93,7 +92,7 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
       }
     }
   }else linha++;
-
+  //console.log("Saiu na logica com a linha "+linha);
   return linha;
 }
 
@@ -133,8 +132,11 @@ function funcaoPara(textolinhas, variaveis, linha, sequencia, erros){
             //variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
             //OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
             
-            
-            linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+            if(linha<=qtdlinha && erros.linha.length == 0){
+              linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+              if(erros.linha.length != 0) return;
+            }else return;            
+
             sequencia.setFluxo(linha);
             variaveis[varfor].setValor(x, sequencia.linhas.length);
             qtd = (linha - linhaant);
@@ -208,7 +210,6 @@ function funcaoEnquanto(textolinhas, variaveis, linha, sequencia, erros){
 }
 
 function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
-  //console.log(textolinhas[linha].trim());
   var teste = verificaSe(textolinhas[linha].trim());
   if(teste !=false){
     if(teste === true){
@@ -237,43 +238,61 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
         if(teste[1] == "=") teste[1] = "==";
         if(eval(varum+" "+teste[1]+" "+vardois)){
           while(!verificaFimSe(textolinhas[linha].trim())){
-            if(linha>qtdlinha){
-              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");return;
+            if(linha>=qtdlinha){
+              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
              return;
             }
-            linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+            if(linha<=qtdlinha && erros.linha.length == 0){
+            
+              linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+              if(erros.linha.length != 0) return;
 
+
+            }else return;
+            console.log(linha);
           }
           sequencia.setFluxo(linha);
           linha++;
  
         }else{
+          //VERIFICA FINAL DA FUNCAO PARA PULAR AS LINHAS.
           while(!verificaFimSe(textolinhas[linha].trim())){
             linha = seIfDentrodeIf(textolinhas, linha);
-            alert(textolinhas[linha].trim());
+            
+            console.log(linha);
+            if(linha>=qtdlinha || linha == undefined){
+              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+             return;
+            }
             linha++;
           }
           sequencia.setFluxo(linha);
-          ++linha;
-          alert("esse"+linha);
-
+          linha++;
+          console.log("linha: "+linha+" qtdlinha: "+qtdlinha);
         }
       } else{
         erros.setErro((linha+1), "erro na execução");return;
       } 
     }
   }
-  alert(linha);
+  //console.log("linha 2 fim: "+linha);
   return linha;
 }
 
 function seIfDentrodeIf(textolinhas, linha){
   var teste = verificaSe(textolinhas[linha].trim());
   if(teste != false){
+    linha++;
     while(!verificaFimSe(textolinhas[linha].trim())){
-      linha++
+      linha = seIfDentrodeIf(textolinhas, linha);
+      linha++;
+      if(linha>=qtdlinha){
+        erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+       return;
+      }
     }
   }
+  console.log("final do pula se linha "+linha);
   return linha;
 }
 
