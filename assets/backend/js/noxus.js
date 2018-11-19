@@ -92,7 +92,7 @@ function verificaVariavel(textolinha, variaveis, linha, sequencia, erros){
 }
 
 function mudaValorVariavel(textolinha, variaveis, linha, sequencia, erros){
-  regexMudaValorVariavel = /^([a-z]+)(?:=| = | =|= )([a-zA-Z]+|[0-9]+)$/; // \w+ tb funciona
+  regexMudaValorVariavel = /^([a-z]+)(?:[ ]*=[ ]*)([a-zA-Z]+|[0-9]+)$/; // \w+ tb funciona
   regexStrIntChar = /^([a-zA-Z]+)|([0-9]+)$/; 
   regexStr = /^([a-zA-Z]+)$/;
   regexInt = /^([0-9]+)$/;
@@ -105,26 +105,26 @@ function mudaValorVariavel(textolinha, variaveis, linha, sequencia, erros){
     if(posicaovariavel  !== false){
       if(variaveis[posicaovariavel].tipo == "str"){
         if(regexStr.test(valorvariavel)){
-          sequencia.setFluxo(linha)
+          sequencia.setFluxo(linha);
           variaveis[posicaovariavel].setValor(valorvariavel, sequencia.linhas.length);
         }else{
-          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO")
+          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO");
         }
       }
       if(variaveis[posicaovariavel].tipo == "int"){
         if(regexInt.test(valorvariavel)){
-          sequencia.setFluxo(linha)
+          sequencia.setFluxo(linha);
           variaveis[posicaovariavel].setValor(valorvariavel, sequencia.linhas.length);;
         }else{
-          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO")
+          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO");
         }
       }
       if(variaveis[posicaovariavel].tipo == "char"){
         if(regexChar.test(valorvariavel)){
-          sequencia.setFluxo(linha)
+          sequencia.setFluxo(linha);
           variaveis[posicaovariavel].setValor(valorvariavel, sequencia.linhas.length);
         }else{
-          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO")
+          erros.setErro((linha+1), "VALOR NAO CORRESPONDE AO TIPO");
         }
       }
     }else{
@@ -134,8 +134,6 @@ function mudaValorVariavel(textolinha, variaveis, linha, sequencia, erros){
 }
 	
 function verificaPara(textolinha){
-  //CASO ACEITE VARIAVEL NA CONDIÇÃO
-  //regexPara = /^(?:para)(?:[ ]+)([A-Za-z]+)(?:[ ]+)(?:de)(?:[ ]+)([0-9]+|[A-Za-z]+)(?:[ ]+)(?:ate)(?:[ ]+)([0-9]+|[A-Za-z]+)(?:[ ]+)(?:faca)$/;
   regexPara = /^(?:para)(?:[ ]+)([A-Za-z]+)(?:[ ]+)(?:de)(?:[ ]+)([0-9]+)(?:[ ]+)(?:ate)(?:[ ]+)([0-9]+)(?:[ ]+)(?:faca)$/;
   regexInicioPara = /^(?:para)/;
   if(regexInicioPara.test(textolinha) && regexPara.test(textolinha)){
@@ -157,7 +155,7 @@ function verificaFimPara(textolinha){
 }
 
 function verificaEnquanto(textolinha){
-  regexEnquanto = /^(?:enquanto)(?:|[ ]+)[(](?:|[ ]+)([a-z]+)(?:|[ ]+)(<|>|<>|<=|==|>=|!=)(?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)[)](?:[ ]+)(?:faca)$/;
+  regexEnquanto = /^(?:enquanto)(?:|[ ]+)[(](?:|[ ]+)([a-z]+)(?:|[ ]+)(<|>|<=|==|>=|!=)(?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)[)](?:[ ]+)(?:faca)$/;
   regexInicioEnquanto = /^(?:enquanto)/;
   
   if(regexInicioEnquanto.test(textolinha) && regexEnquanto.test(textolinha)){

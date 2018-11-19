@@ -68,7 +68,7 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
            ehVariavel ){
             
           variaveisEResultados(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
-          OperacaoMatemarica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
+          OperacaoMatematica(textolinhas[linha].trim(),variaveis,linha, sequencia, erros);
 
           linha++;
         }
@@ -322,7 +322,7 @@ function seSeDentrodeSe(textolinhas, linha){
   return linha;
 }
 
-function OperacaoMatemarica(textolinha, variaveis, linha, sequencia, erros){
+function OperacaoMatematica(textolinha, variaveis, linha, sequencia, erros){
   var teste = verificaConta(textolinha);
 
   if(teste !=false){

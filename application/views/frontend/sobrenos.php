@@ -15,13 +15,22 @@
 <section class="probootstrap-section">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 pr-md-12 pr-0">
+            <div class="col-md-12 pr-md-12 pr-0">
             <!-- <h2 class="mb-5">Our Mission</h2> -->
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor nulla varius lectus tincidunt imperdiet. Sed ex orci, pellentesque at pretium in, finibus in turpis. Nam non lacinia metus. Aliquam erat volutpat. Donec pharetra gravida lectus, sit amet rhoncus felis interdum rhoncus. Nulla pellentesque vestibulum magna, et iaculis enim aliquam quis. Proin nisi nisl, aliquam quis maximus sit amet, bibendum at ex.</p>
-            <p>Fusce lacinia imperdiet dolor, sed fermentum ante sodales suscipit. Integer et purus quis quam tempus tempus. Etiam sagittis euismod odio, lobortis malesuada leo sagittis eget. Proin dapibus lectus nec tincidunt pretium. Ut elementum interdum dolor fringilla ullamcorper. Nunc est ligula, dapibus in felis in, malesuada semper felis. In dui tortor, pretium ut magna vitae, lobortis congue tellus. Suspendisse eu luctus libero. Nunc bibendum, augue id lacinia lacinia, augue velit posuere dui, nec semper augue est et lacus.</p>
-            <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla sed tortor dapibus eros convallis vestibulum non et nulla. Quisque et magna ullamcorper, interdum eros sit amet, laoreet arcu. Praesent vitae ligula neque. Maecenas eget ex sapien. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent lacinia at nulla ut maximus. Morbi ultricies ex vitae dui ullamcorper molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer sollicitudin, augue vitae venenatis eleifend, dui ante sollicitudin quam, a elementum enim metus ut arcu. Phasellus volutpat tincidunt ex at rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus justo velit, volutpat ut nibh vitae, pulvinar blandit nunc.</p>
-            <p>Mauris semper fermentum commodo. Suspendisse neque lorem, vehicula in erat at, pharetra euismod lacus. Duis vitae scelerisque mauris. In leo justo, ultrices vel ligula et, elementum fringilla augue. Mauris commodo urna id tortor consequat, sit amet rhoncus elit rhoncus. Nullam pellentesque elementum sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas eleifend sagittis elit vel tristique. Phasellus mattis leo non leo maximus eleifend.</p>
-          </div>
+            <h3>O Projeto</h3><br>
+            <p>O projeto realizado tem como intuito estudar sobre como está sendo feito o ensino da lógica de programação e assim criar uma ferramenta que auxilie as pessoas que queiram adquirir algum conhecimento sobre a matéria usando uma metodologia que chame a atenção do aluno, para que assim ele sinta cada vez mais vontade de aprender.</p>
+            <h3>Motivação</h3><br>
+            <p>A motivação para o desenvolvimento desta ferramenta se deu após perceber que a disciplina de Algoritmos, encontrada nos primeiros semestres dos cursos técnicos e superiores de informática e sendo ela a responsável por ensinar os alunos o básico de lógica de programação, está sendo considerada pelos alunos uma disciplina difícil e complicada de se concluir, tornando-se uma dos principais motivos de desistência dos cursos de TI.</p>
+            <h3>Objetivo</h3><br>
+            <p>Desenvolver uma ferramenta que auxilie no ensino/aprendizagem de Lógica de Programação que supra as necessidades tanto de um aluno iniciante do curso mas também alguém que não conhece algoritmos e pretende adquirir conhecimento sobre o assunto.</p>
+            <h3>Justificativa</h3><br>
+            <p>
+            <ol>
+                <li>Dificuldade adquirir conhecimento relacionado a cadeira de Lógica de Programação</li>
+                <li>Motivo principal do índice de desistência hoje em dia ser muito elevado.</li>
+                </ol>
+            </p>
+            </div>
         </div>
     </div>
 </section>
