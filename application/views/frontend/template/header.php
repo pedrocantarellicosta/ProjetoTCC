@@ -23,7 +23,7 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sistema <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url('noxus')?>">Utilizar</a></li>
-                        <li><a href="#">Fazer Download</a></li>
+                        <li><a href="/sistemanoxus/download/Noxus.zip" download>Fazer Download</a></li>
                       </ul>
                     </li>
                     <li>

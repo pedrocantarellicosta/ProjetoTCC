@@ -25,11 +25,11 @@
             <div class="row">
               <div class="col-md text-left">
                 <ul class="list-unstyled footer-small-nav">
-                  <li><a href="#">Legal</a></li>
-                  <li><a href="#">Privacy</a></li>
-                  <li><a href="#">Cookies</a></li>
-                  <li><a href="#">Terms</a></li>
-                  <li><a href="#">About</a></li>
+                  <li><a href="<?php echo base_url('home')?>">Home</a></li>
+                  <li><a href="<?php echo base_url('contato')?>">Contato</a></li>
+                  <li><a href="<?php echo base_url('noxus')?>">Utilizar a Ferramenta</a></li>
+                  <li><a href="/sistemanoxus/download/Noxus.zip" download>Download</a></li>
+                  <li><a href="<?php echo base_url('sobrenos')?>">Sobre</a></li>
                 </ul>
               </div>
               <div style="text-align:right;color:rgba(255, 255, 255, 0.5);">

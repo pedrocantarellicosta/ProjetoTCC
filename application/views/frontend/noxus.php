@@ -104,12 +104,7 @@
     </div>
     <div class='row'>
         <div class='col-md-8 ' style='height:650px'>
-        <div id="editor">inteiro x = 0
-
-enquanto (x < 10) faca 
-    imprime(x)
-    x = x+1
-fimenquanto</div>
+        <div id="editor"></div>
             <div id="range" style="display:none" >
                 <input type="range" id="desliza"  onchange="changeRange(this.value)" min="0" max="20" >
             </div>
