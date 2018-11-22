@@ -191,21 +191,24 @@ function verificaConta(textolinha){
 
 function verificaSe(textolinha){
   regexSe = /^(?:se)(?:|[ ]+)[(](?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)(<|>|<>|<=|=|>=|!=)(?:|[ ]+)([a-z]+|[0-9]+)(?:|[ ]+)[)](?:|[ ]+)(?:entao)$/;
-  regexInicioSe = /^(?:se)/;
-  if(regexInicioSe.test(textolinha) && regexSe.test(textolinha)){  
+  //regexInicioSe = /^(?:se)/;
+  if(regexSe.test(textolinha)){  
     varum = textolinha.replace(regexSe,"$1");
     operacao = textolinha.replace(regexSe,"$2");
     vardois = textolinha.replace(regexSe,"$3");
     var op = [varum, operacao, vardois];
     return op;
-  }else if(regexInicioSe.test(textolinha)){
-    return true;
-  } 
+  }
   return false;
 }
 
 function verificaFimSe(textolinha){
   regexFimSe = /^(?:fimse)$/;
+  if(regexFimSe.test(textolinha)) return true;
+  else return false;
+}
+function verificaSenao(textolinha){
+  regexFimSe = /^(?:senao)$/;
   if(regexFimSe.test(textolinha)) return true;
   else return false;
 }

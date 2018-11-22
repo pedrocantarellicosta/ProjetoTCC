@@ -267,33 +267,76 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
         if(ehVariaveis[0]==true) varum = variaveis[varum].valores[variaveis[varum].valores.length-1];
         if(ehVariaveis[1]==true) vardois = variaveis[vardois].valores[variaveis[vardois].valores.length-1];
         if(teste[1] == "=") teste[1] = "==";
+        var temsenao = false;
+
         if(eval(varum+" "+teste[1]+" "+vardois)){
           while(!verificaFimSe(textolinhas[linha].trim())){
-            if(linha>=qtdlinha){
-              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
-             return;
+            if(verificaSenao(textolinhas[linha].trim())){
+              temsenao = true;
+              sequencia.setFluxo(linha);
+
+              linha++;
             }
-            if(linha<=qtdlinha && erros.linha.length == 0){
-            
-              linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
-              if(erros.linha.length != 0) return;
+            if(temsenao == true){
+              linha = seSeDentrodeSe(textolinhas, linha);
+              
+              if(linha>=qtdlinha || linha == undefined){
+                erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+              return;
+              }
+              linha++;
+            }
+
+            if(temsenao == false){
+              if(linha>=qtdlinha){
+                erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+              return;
+              }
+              if(linha<=qtdlinha && erros.linha.length == 0){
+              
+                linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+                if(erros.linha.length != 0) return;
 
 
-            }else return;
+              }else return;
+            }
           }
+
           sequencia.setFluxo(linha);
           linha++;
  
         }else{
           //VERIFICA FINAL DA FUNCAO PARA PULAR AS LINHAS.
           while(!verificaFimSe(textolinhas[linha].trim())){
-            linha = seSeDentrodeSe(textolinhas, linha);
-            
-            if(linha>=qtdlinha || linha == undefined){
-              erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
-             return;
+            //VERIFICA SE TEM SENAO... SE NAO TIVER ELE VAI PULAR ATE O FIMSE, SENAO VAI EXECUTAR O QUE TEM DENTRO DELE.
+            if(verificaSenao(textolinhas[linha].trim())){
+              temsenao = true;
+              sequencia.setFluxo(linha);
+
+              linha++;
+              while(!verificaFimSe(textolinhas[linha].trim())){
+                if(linha>=qtdlinha){
+                  erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+                 return;
+                }
+                if(linha<=qtdlinha && erros.linha.length == 0){
+                
+                  linha = executaLogica(textolinhas, variaveis, linha, sequencia, erros);
+                  if(erros.linha.length != 0) return;
+    
+    
+                }else return;
+              }
             }
-            linha++;
+
+            if(temsenao == false){
+              linha = seSeDentrodeSe(textolinhas, linha);
+              if(linha>=qtdlinha || linha == undefined){
+                erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
+              return;
+              }
+              linha++;
+            }
           }
           sequencia.setFluxo(linha);
           linha++;
@@ -308,6 +351,7 @@ function funcaoSe(textolinhas, variaveis, linha, sequencia, erros){
 
 function seSeDentrodeSe(textolinhas, linha){
   var teste = verificaSe(textolinhas[linha].trim());
+  console.log(textolinhas[linha].trim()+" : "+ verificaSe(textolinhas[linha].trim()));
   if(teste != false){
     linha++;
     while(!verificaFimSe(textolinhas[linha].trim())){
@@ -317,6 +361,7 @@ function seSeDentrodeSe(textolinhas, linha){
         erros.setErro((linha+1), "ERRO! NÃO EXISTE FINAL DA FUNÇÃO SE");
        return;
       }
+      //console.log(linha);
     }
   }
   return linha;
