@@ -54,39 +54,57 @@ function ehNumero(str) {
 }
 
 function verificaVariavel(textolinha, variaveis, linha, sequencia, erros){
-  regexInteiro = /^inteiro ([a-z]+)(?:=| = | =|= )([0-9]+)$/;
+  regexNumero = /^numero ([a-z]+)(?:=| = | =|= )([0-9]+)$/;
   regexPalavra = /^palavra ([a-z]+)(?:=| = | =|= )([a-zA-Z]+)$/;
-  regexCaracter = /^caracter ([a-z]+)(?:=| = | =|= )([a-zA-Z])$/;  
+  regexCaractere = /^caractere ([a-z]+)(?:=| = | =|= )([a-zA-Z])$/;  
   
-  ehvariavel = false
+  regexInicioNumero = /^numero/;
+  regexInicioPalavra = /^palavra/;
+  regexInicioCaractere = /^caractere/;
+  
+  var falha = true;
+  var ehvariavel = false
   //ANTES DO PUSH VERIFICAR SE A VARIAVEL JA EXISTE.SE SIM, ERRO!
 
-  if(regexInteiro.test(textolinha)){  
-    ehvariavel = true;
-    nomevariavel = textolinha.replace(regexInteiro, "$1"); 
-    valorvariavel = textolinha.replace(regexInteiro, "$2"); 
-    tipo = "int";
-  }
-  if(regexPalavra.test(textolinha)){  
-    ehvariavel = true;
-    nomevariavel = textolinha.replace(regexPalavra, "$1"); 
-    valorvariavel = textolinha.replace(regexPalavra, "$2"); 
-    tipo = "str";
-  }
-  if(regexCaracter.test(textolinha)){  
-    ehvariavel = true;
-    nomevariavel = textolinha.replace(regexCaracter, "$1"); 
-    valorvariavel = textolinha.replace(regexCaracter, "$2"); 
-    tipo = "char";
-      
-  }
-  if(ehvariavel){
-    if(verificaExistenciaVariavel(variaveis, nomevariavel) !== false){
-      erros.setErro((linha+1), "ERRO DUPLICIDADE VARIAVEL");
+  if(regexInicioNumero.test(textolinha) == true ||regexInicioPalavra.test(textolinha) == true || 
+    regexInicioCaractere.test(textolinha) == true){
+    
+    if(regexNumero.test(textolinha)){
+      falha = false;  
+      ehvariavel = true;
+      nomevariavel = textolinha.replace(regexNumero, "$1"); 
+      valorvariavel = textolinha.replace(regexNumero, "$2"); 
+      tipo = "int";
+    }
+    if(regexPalavra.test(textolinha)){
+      falha = false;  
+      ehvariavel = true;
+      nomevariavel = textolinha.replace(regexPalavra, "$1"); 
+      valorvariavel = textolinha.replace(regexPalavra, "$2"); 
+      tipo = "str";
+    }
+    if(regexCaractere.test(textolinha)){  
+      falha = false;
+      ehvariavel = true;
+      nomevariavel = textolinha.replace(regexCaractere, "$1"); 
+      valorvariavel = textolinha.replace(regexCaractere, "$2"); 
+      tipo = "char";
+        
+    }
+    console.log(ehvariavel);
+    if(falha == true){
+      erros.setErro((linha+1), "VALOR ATRIBUIDO A VARIÁVEL NAO CORRESPONDE AO TIPO");
       return;
     }else{
-      sequencia.setFluxo(linha);
-      variaveis.push(new Variavel(nomevariavel,tipo, valorvariavel,sequencia.linhas.length)); 
+      if(ehvariavel){
+        if(verificaExistenciaVariavel(variaveis, nomevariavel) !== false){
+          erros.setErro((linha+1), "ERRO DUPLICIDADE VARIAVEL");
+          return;
+        }else{
+          sequencia.setFluxo(linha);
+          variaveis.push(new Variavel(nomevariavel,tipo, valorvariavel,sequencia.linhas.length)); 
+        }
+      }
     }
   } 
 }

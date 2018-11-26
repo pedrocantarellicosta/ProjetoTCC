@@ -1,4 +1,5 @@
 <hr>
+<div style='min-height:100%;position:relative;'>
         <div class="container">
           <div class="row">
             <div class="col-md-4">
@@ -24,3 +25,4 @@
             </div>
           </div>
         </div>
+</div>

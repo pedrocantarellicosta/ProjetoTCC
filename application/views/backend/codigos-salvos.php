@@ -1,9 +1,23 @@
-<section class="probootstrap-section" style='margin-top:3%'>
+<section class="probootstrap-section" style='margin-top:3%; min-height:700px;'>
     <div class='container'>
         <div class='row'>
             <div class="list-group">
                 <?php 
                 $codigos = $this->session->userdata('codigo');
+                if(count($codigos)==0){
+                    ?>
+                    <div class="list-group-item list-group-item-action flex-column align-items-start ">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-10 ">
+                                    <h4>Não possuem Códigos Salvos</h4>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <?php
+                }
                 $linha = 1;
                 foreach($codigos as $cod)
                 {?>
@@ -37,3 +51,4 @@
         </div>
     </div>
 </section>
+</div

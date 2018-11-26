@@ -48,9 +48,9 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
       //para, enquanto e se.
       if(linha <= qtdlinha){
         // TESTE PARA SABER SE É UM INICIO DE CRIAÇAO DE VARIAVEL.
-        regexInteiro = /^inteiro/;
+        regexNumero = /^numero/;
         regexPalavra = /^palavra/;
-        regexCaracter = /^caracter/;
+        regexCaractere = /^caractere/;
         regexImprime = /^imprime[ ]*\(/;
 
         nomeVariavel = textolinhas[linha].trim().split("=")[0].trim();
@@ -61,9 +61,9 @@ function executaLogica(textolinhas, variaveis, linha, sequencia, erros){
           }
         }
 
-        if(regexInteiro.test(textolinhas[linha].trim()) == true ||
+        if(regexNumero.test(textolinhas[linha].trim()) == true ||
            regexPalavra.test(textolinhas[linha].trim()) == true || 
-           regexCaracter.test(textolinhas[linha].trim()) == true||
+           regexCaractere.test(textolinhas[linha].trim()) == true||
            regexImprime.test(textolinhas[linha].trim()) == true||
            ehVariavel ){
             
@@ -381,7 +381,7 @@ function OperacaoMatematica(textolinha, variaveis, linha, sequencia, erros){
 
     if(varum !== false && vardois !== false && vartres !== false){
       if(variaveis[varum].tipo != "int"){
-        erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO INTEIRO.");
+        erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO NUMERO.");
         return;
       }
       if(ehNumero(teste[1]) === true && ehNumero(teste[3]) === true){
@@ -390,7 +390,7 @@ function OperacaoMatematica(textolinha, variaveis, linha, sequencia, erros){
       }   
       if(ehNumero(teste[1]) === true && ehNumero(teste[3]) === false){
         if(variaveis[vartres].tipo != "int"){
-          erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO INTEIRO.");
+          erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO NUMERO.");
          return;
         }else{
           sequencia.setFluxo(linha);
@@ -399,7 +399,7 @@ function OperacaoMatematica(textolinha, variaveis, linha, sequencia, erros){
       }
       if(ehNumero(teste[1]) === false && ehNumero(teste[3]) === true){
         if(variaveis[vardois].tipo != "int"){
-          erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO INTEIRO.");
+          erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO NUMERO.");
          return;
         }else{
           sequencia.setFluxo(linha);
@@ -408,7 +408,7 @@ function OperacaoMatematica(textolinha, variaveis, linha, sequencia, erros){
       }
       if(ehNumero(teste[1]) === false && ehNumero(teste[3]) === false){
         if(variaveis[vardois].tipo != "int" && variaveis[vartres].tipo != "int"){
-          erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO INTEIRO.");
+          erros.setErro((linha+1), "VARIAVEL NÃO É DO TIPO NUMERO.");
          return;
         }else{
           sequencia.setFluxo(linha);
@@ -433,10 +433,10 @@ function OperacaoMatematica(textolinha, variaveis, linha, sequencia, erros){
 function adicionaVariavel(tipo){
   switch(tipo){
     case 1:
-      editor.insert("inteiro nomevariavel = 0\n");
+      editor.insert("numero nomevariavel = 0\n");
       break;
     case 2:
-      editor.insert("caracter nomevariavel = 0\n");
+      editor.insert("caractere nomevariavel = 0\n");
       break;
     case 3: 
       editor.insert("palavra nomevariavel = 0\n");
@@ -447,7 +447,7 @@ function adicionaVariavel(tipo){
 }
 
 function adicionaPara(){
-  editor.insert("inteiro x = 0\npara x de 0 ate 10 faca\n\nfimpara ");
+  editor.insert("numero x = 0\npara x de 0 ate 10 faca\n\nfimpara ");
   slidetoggle();
 }
 

@@ -1,4 +1,4 @@
- 
+
 <section class="probootstrap-cover">
 <div class="container">
 <div class="row probootstrap-vh-100 align-items-center text-center">
@@ -25,7 +25,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md pr-md-5 pr-0 mb-5">
-            <h1 class="mb-4 display-5">Entenda um pouco sobre Lógica de Programação</h1><hr><br>
+            <h1 class="mb-4 display-5">Entenda sobre Lógica de Programação</h1><hr><br>
             <div class="probootstrap-item mb-4">
               <h3>Entenda o Básico de Lógica de Programação Sem Pagar Nada</h3>
               

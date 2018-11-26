@@ -23,8 +23,8 @@
                     <li class="dropdown" style='margin: 0px 2px 10px 0px;;'>
                       <a href="#" class="btn btn-primary btn-lg" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Variaveis <span class="caret"></span></a>
                       <ul class="dropdown-menu">
-                        <li><a onclick="adicionaVariavel(1)">Inteiro</a></li>
-                        <li><a onclick="adicionaVariavel(2)">Caracter</a></li>
+                        <li><a onclick="adicionaVariavel(1)">Número</a></li>
+                        <li><a onclick="adicionaVariavel(2)">Caractere</a></li>
                         <li><a onclick="adicionaVariavel(3)">Palavra</a></li>
                       </ul>
                     </li>
@@ -205,6 +205,12 @@
 </div>
 </section>
 
+
+
+
+
+
+
 <script src="<?php echo base_url('assets/backend/js/ace/src-noconflict/ace.js')?>" type="text/javascript" charset="utf-8"></script>
 
 <script>
@@ -226,21 +232,21 @@ var Range = ace.require('ace/range').Range;
  }, false);
  
 function exemploCalculadora(){
-    texto = "inteiro numeroum = 3\r\ninteiro numerodois = 4\r\n\r\ninteiro soma = 0\r\ninteiro subtracao = 0\r\ninteiro multiplicacao = 0\r\ninteiro divizao = 0\r\n\r\nsoma = numeroum + numerodois\r\nsubtracao = numeroum - numerodois\r\nmultiplicacao = numeroum * numerodois\r\ndivizao = numeroum / numerodois\r\n\r\nimprime(\"Resultado da soma eh \",soma)\r\nimprime(\"Resultado da subtracao eh \",subtracao)\r\nimprime(\"Resultado da multiplicacao eh \",soma)\r\nimprime(\"Resultado da divizao eh \",divizao)";
+    texto = "numero numeroum = 3\r\nnumero numerodois = 4\r\n\r\nnumero soma = 0\r\nnumero subtracao = 0\r\nnumero multiplicacao = 0\r\nnumero divizao = 0\r\n\r\nsoma = numeroum + numerodois\r\nsubtracao = numeroum - numerodois\r\nmultiplicacao = numeroum * numerodois\r\ndivizao = numeroum / numerodois\r\n\r\nimprime(\"Resultado da soma eh \",soma)\r\nimprime(\"Resultado da subtracao eh \",subtracao)\r\nimprime(\"Resultado da multiplicacao eh \",soma)\r\nimprime(\"Resultado da divizao eh \",divizao)";
 
     editor.setValue("");
     editor.insert(texto, 0);
 }
 
 function exemploComissao(){
-    texto = "palavra nome = Fulano\r\ninteiro salario = 1500\r\ninteiro valortotalvendas = 0\r\ninteiro comissao = 0\r\ninteiro salariofinal = 0\r\n\r\nvalortotalvendas = 10000\r\n\r\ncomissao = valortotalvendas * 15\r\ncomissao = comissao / 100\r\n\r\nsalariofinal = salario + comissao\r\n\r\nimprime(\"Resultado\")\r\nimprime(\"Vendedor eh \", nome)\r\nimprime(\"Salario eh R$\", salario)\r\nimprime(\"Valor Total de Vendas R$\", valortotalvendas)\r\nimprime(\"Comissao de R$\", comissao)\r\nimprime(\"Total a receber R$\", salariofinal)";
+    texto = "palavra nome = Fulano\r\nnumero salario = 1500\r\nnumero valortotalvendas = 0\r\nnumero comissao = 0\r\nnumero salariofinal = 0\r\n\r\nvalortotalvendas = 10000\r\n\r\ncomissao = valortotalvendas * 15\r\ncomissao = comissao / 100\r\n\r\nsalariofinal = salario + comissao\r\n\r\nimprime(\"Resultado\")\r\nimprime(\"Vendedor eh \", nome)\r\nimprime(\"Salario eh R$\", salario)\r\nimprime(\"Valor Total de Vendas R$\", valortotalvendas)\r\nimprime(\"Comissao de R$\", comissao)\r\nimprime(\"Total a receber R$\", salariofinal)";
 
     editor.setValue("");
     editor.insert(texto, 0);
 }
 
 function exemploQualMaiorNumero(){
-    texto = "inteiro i = 0\r\ninteiro x = 0\r\n\r\nx = 10\r\ni = 20\r\n \r\nimprime(\"Maior Numero\")\r\n \r\nse (x > i) entao\r\n  imprime(x) \r\nfimse\r\n\r\nse (i > x) entao\r\n    imprime(i)\r\nfimse";
+    texto = "numero i = 0\r\nnumero x = 0\r\n\r\nx = 10\r\ni = 20\r\n \r\nimprime(\"Maior Numero\")\r\n \r\nse (x > i) entao\r\n  imprime(x) \r\nfimse\r\n\r\nse (i > x) entao\r\n    imprime(i)\r\nfimse";
 
     editor.setValue("");
     editor.insert(texto, 0);
