@@ -82,7 +82,7 @@
                                     
                                         <div class="form-group">
                                             <label for="recipient-name" class="col-form-label">Descrição:</label>
-                                            <textarea class="form-control" id="descricao" name='descricao' style="resize:none;height:100px;"></textarea>
+                                            <textarea class="form-control" id="descricao" name='descricao' style="resize:none;height:100px;" placeholder="Digite aqui uma descrição do código criado" required minlength=10></textarea>
                                             <input type='hidden' id='txt-codigo' name='txt-codigo' value=''>
                                         </div>
                                     </div>

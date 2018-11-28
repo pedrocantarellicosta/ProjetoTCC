@@ -21,16 +21,16 @@
                         <?php endif; ?>
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Usuário" name="txt-user" type="text" autofocus>
+                                    <input class="form-control" placeholder="Usuário" name="txt-user" type="text" autofocus required minlength=5=>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Senha" name="txt-senha" type="password" value="">
+                                    <input class="form-control" placeholder="Senha" name="txt-senha" type="password" value="" minlength=5 required>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Nome Completo" name="txt-nome" type="text" value="">
+                                    <input class="form-control" placeholder="Nome Completo" name="txt-nome" type="text" value="" minlength=10 required>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Email" name="txt-email" type="email" value="">
+                                    <input class="form-control" placeholder="Email" name="txt-email" type="email" value="" minlength=10 required>
                                 </div>
                             </fieldset>
                         <?php   echo validation_errors('<div class="alert alert-danger">','</div>');

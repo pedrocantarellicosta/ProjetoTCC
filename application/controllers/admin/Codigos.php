@@ -27,7 +27,7 @@ class Codigos extends CI_Controller {
         $this->form_validation->set_rules('descricao', 'descricao', 'required|min_length[10]');
         $this->form_validation->set_rules('txt-codigo', 'codigo', 'required|min_length[10]');
         if($this->form_validation->run() == FALSE){
-            $this->index();
+            $this->session->set_flashdata('error','Descrição minima deve ser de no minimo 10 caracteres ou não possui código digitado!');
         }else{
 
             $id_usuario = $this->session->userdata('user')->id_usuario;

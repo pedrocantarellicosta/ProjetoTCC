@@ -69,6 +69,7 @@ class Usuarios extends CI_Controller {
 
         $this->form_validation->set_rules('txt-senha', 'Senha', 'required|min_length[5]');
         if($this->form_validation->run() == FALSE){
+            $this->session->set_flashdata('error','Erro ao criar usuário!');
             $this->page_criar_usuario();
         }else{
             $dados['user'] = $this->input->post('txt-user');
